@@ -1,26 +1,283 @@
 @import "tailwindcss";
+@import "../styles/tokens.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* ==========================================================================
+   Tailwind theme bridge
+   `inline` means the generated utilities reference the `--ac-*` custom
+   properties from tokens.css rather than copying their values. Change a token,
+   and every utility built on it changes with it.
+   ========================================================================== */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* --- Palette ---------------------------------------------------------- */
+  --color-espresso: var(--ac-espresso);
+  --color-mahogany: var(--ac-mahogany);
+  --color-amber: var(--ac-amber);
+  --color-ember: var(--ac-ember);
+  --color-ink: var(--ac-ink);
+  --color-paper: var(--ac-paper);
+  --color-cream: var(--ac-cream);
+  --color-linen: var(--ac-linen);
+  --color-sand: var(--ac-sand);
+  --color-stone: var(--ac-stone);
+
+  /* --- Semantic --------------------------------------------------------- */
+  --color-page: var(--ac-bg-page);
+  --color-surface: var(--ac-bg-surface);
+  --color-sunken: var(--ac-bg-sunken);
+  --color-inverse: var(--ac-bg-inverse);
+  --color-muted: var(--ac-text-muted);
+  --color-secondary: var(--ac-text-secondary);
+  --color-on-dark: var(--ac-text-on-dark);
+  --color-on-dark-muted: var(--ac-text-on-dark-muted);
+  --color-hairline: var(--ac-border);
+  --color-hairline-strong: var(--ac-border-strong);
+  --color-hairline-dark: var(--ac-border-on-dark);
+  --color-accent: var(--ac-accent);
+  --color-accent-hover: var(--ac-accent-hover);
+  --color-accent-quiet: var(--ac-accent-quiet);
+
+  /* --- Type ------------------------------------------------------------- */
+  --font-display: var(--ac-font-display);
+  --font-body: var(--ac-font-body);
+
+  --text-2xs: var(--ac-text-2xs);
+  --text-xs: var(--ac-text-xs);
+  --text-sm: var(--ac-text-sm);
+  --text-base: var(--ac-text-base);
+  --text-md: var(--ac-text-md);
+  --text-lg: var(--ac-text-lg);
+  --text-xl: var(--ac-text-xl);
+  --text-2xl: var(--ac-text-2xl);
+  --text-3xl: var(--ac-text-3xl);
+  --text-4xl: var(--ac-text-4xl);
+  --text-5xl: var(--ac-text-5xl);
+
+  --leading-tight: var(--ac-leading-tight);
+  --leading-snug: var(--ac-leading-snug);
+  --leading-normal: var(--ac-leading-normal);
+  --leading-relaxed: var(--ac-leading-relaxed);
+
+  --tracking-tight: var(--ac-tracking-tight);
+  --tracking-wide: var(--ac-tracking-wide);
+  --tracking-widest: var(--ac-tracking-widest);
+
+  /* --- Layout ----------------------------------------------------------- */
+  --container-page: var(--ac-container);
+  --container-narrow: var(--ac-container-narrow);
+  --container-measure: var(--ac-measure);
+
+  --spacing-gutter: var(--ac-gutter);
+  --spacing-section: var(--ac-section-y);
+  --spacing-section-tight: var(--ac-section-y-tight);
+  --spacing-header: var(--ac-header-h);
+
+  /* --- Radii ------------------------------------------------------------ */
+  --radius-xs: var(--ac-radius-xs);
+  --radius-sm: var(--ac-radius-sm);
+  --radius-md: var(--ac-radius-md);
+  --radius-lg: var(--ac-radius-lg);
+  --radius-xl: var(--ac-radius-xl);
+
+  /* --- Elevation -------------------------------------------------------- */
+  --shadow-xs: var(--ac-shadow-xs);
+  --shadow-sm: var(--ac-shadow-sm);
+  --shadow-md: var(--ac-shadow-md);
+  --shadow-lg: var(--ac-shadow-lg);
+
+  /* --- Motion ----------------------------------------------------------- */
+  --ease-out: var(--ac-ease-out);
+  --ease-in-out: var(--ac-ease-in-out);
+  --ease-spring: var(--ac-ease-spring);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* In-page anchors and the sticky sub-nav shouldn't land under the header */
+    scroll-padding-top: calc(var(--ac-header-h) + var(--ac-space-lg));
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--ac-bg-page);
+    color: var(--ac-text-primary);
+    font-family: var(--ac-font-body);
+    font-size: var(--ac-text-md);
+    line-height: var(--ac-leading-relaxed);
+    /* Never let the browser fake a weight or an italic */
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--ac-font-display);
+    font-weight: 600;
+    line-height: var(--ac-leading-tight);
+    letter-spacing: var(--ac-tracking-tight);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Focus is always visible — styled, never removed */
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--ac-focus-ring);
+    border-radius: var(--ac-radius-xs);
+  }
+
+  ::selection {
+    background-color: var(--ac-ember);
+    color: var(--ac-cream);
+  }
+
+  img,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ==========================================================================
+   Utilities Tailwind has no good primitive for
+   ========================================================================== */
+
+/* Letterspaced small caps used above section headings */
+@utility eyebrow {
+  font-family: var(--ac-font-body);
+  font-size: var(--ac-text-2xs);
+  font-weight: 600;
+  letter-spacing: var(--ac-tracking-widest);
+  text-transform: uppercase;
+  color: var(--ac-text-muted);
+}
+
+/* Break a child out of its constrained container to the full viewport */
+@utility full-bleed {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+
+/* Warm film grain over photography, so large flat crops don't look plasticky */
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.22;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  }
+}
+
+/* A scrim that keeps light text legible over any photograph, dark at the
+   bottom where the copy sits and clear at the top where the image should read */
+@utility photo-scrim {
+  background:
+    /* A wash from the leading edge, so the copy column has a floor of its own
+       even where the photograph is brightest */
+    linear-gradient(
+      to right,
+      rgb(26 11 2 / 0.55) 0%,
+      rgb(26 11 2 / 0.28) 45%,
+      rgb(26 11 2 / 0) 78%
+    ),
+    linear-gradient(
+      to top,
+      rgb(26 11 2 / 0.9) 0%,
+      rgb(26 11 2 / 0.76) 34%,
+      rgb(26 11 2 / 0.46) 62%,
+      rgb(26 11 2 / 0.18) 100%
+    );
+}
+
+/* The hero photograph settles into place rather than snapping in — a slow
+   scale-down over the first beat of the page. */
+@keyframes hero-settle {
+  from {
+    transform: scale(1.06);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   Scroll reveal
+   The hidden state is applied here rather than in the component's markup, and
+   only once `js` is on <html> (set before first paint in the root layout). So
+   the content is visible to anyone without JavaScript, visible if hydration
+   fails, and visible under reduced motion — and there is no server/client
+   markup difference that could strand an element at opacity 0.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(var(--reveal-y, 22px));
+  }
+
+  html.js [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 620ms var(--ac-ease-out) var(--reveal-delay, 0ms),
+      transform 620ms var(--ac-ease-out) var(--reveal-delay, 0ms);
+  }
+}
+
+/* Hero copy rises in after the photograph settles. Used with a per-element
+   animation-delay to stagger a headline, a subhead and a button. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* The open/closed dot on the Visit page */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
