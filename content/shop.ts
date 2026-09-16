@@ -27,12 +27,12 @@ export type TeamMember = {
 const shop = {
   name: "Almanac Coffee",
   legalName: "Almanac Coffee Co.",
-  tagline: "Old-world knowledge, seasonal harvests, careful craft.",
+  tagline: "Seasonal harvests, careful craft.",
 
   /** Used on the hero. One line, no more. */
-  heroHeadline: "Coffee, read by the season.",
+  heroHeadline: "Coffee by the season.",
   heroSubhead:
-    "A small roastery at the north end of Brooks Street. We buy by the harvest, roast in twelve-kilo batches, and grind it to whatever you brew on — or pull you a cup while you decide.",
+    "A small roastery at the north end of Brooks Street.",
 
   story: [
     "An almanac is a record kept year over year — when to plant, when to cut, what the weather did the last time it looked like this. We keep one for coffee. Every lot that comes through the roaster gets a page: the farm, the altitude, the week it landed, the profile that finally made it sing.",
@@ -50,8 +50,8 @@ const shop = {
       body: "We buy for the season rather than the year, so the shelf changes and the notes printed on it are true.",
     },
     {
-      title: "Ground to order",
-      body: "Tell us what you brew on and it leaves ground for it. Whole bean if you'd rather do it properly at home.",
+      title: "Whole until it’s sold",
+      body: "Nothing on the shelf meets a grinder until someone buys it. Coffee starts going flat within minutes of being ground, so we leave that step for last.",
     },
   ],
 
@@ -103,19 +103,19 @@ const shop = {
       name: "Mireille Okonkwo",
       role: "Founder & Roaster",
       bio: "Keeps the ledger, runs the drum, and will talk about altitude for longer than you want.",
-      image: "team-01.jpg",
+      image: "people/team-01.jpg",
     },
     {
       name: "Sam Ferreira",
       role: "Green Buyer",
       bio: "Cups every offer that reaches us and turns most of them down. Sets the roast profile once a lot survives.",
-      image: "team-02.jpg",
+      image: "people/team-02.jpg",
     },
     {
       name: "Dara Whitlock",
       role: "Bar & Orders",
       bio: "Pulls the shots, grinds the bags, and packs every mail order that leaves the building.",
-      image: "team-03.jpg",
+      image: "people/team-03.jpg",
     },
   ] as TeamMember[],
 
@@ -131,7 +131,7 @@ const shop = {
   ],
 
   pullQuote: {
-    text: "The shelf changes because the harvest does. That is the whole idea.",
+    text: "The shelf changes because the harvest does.",
     attribution: "Mireille Okonkwo, founder",
   },
 };

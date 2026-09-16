@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Container from "@/components/Container";
+import Section from "@/components/Section";
 import Hero from "@/components/Hero";
 import HoursTable from "@/components/HoursTable";
 import ContactForm from "@/components/ContactForm";
@@ -10,6 +11,7 @@ import Gallery from "@/components/Gallery";
 import SectionHeading from "@/components/SectionHeading";
 import Reveal from "@/components/Reveal";
 import shop from "@/content/shop";
+import { LEAD_AFTER_HEADING, stagger } from "@/lib/motion";
 
 export const metadata: Metadata = {
   title: "Visit",
@@ -28,27 +30,26 @@ const mapEmbedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(
 )}&z=16&output=embed`;
 
 const interiorGallery = [
-  { src: "/images/visit-gallery-01.jpg", alt: "The seating nook at the back" },
-  { src: "/images/visit-gallery-02.jpg", alt: "The counter and the pastry case" },
-  { src: "/images/visit-gallery-03.jpg", alt: "The window seat, late afternoon" },
+  { src: "/images/place/visit-gallery-01.jpg", alt: "The seating nook at the back" },
+  { src: "/images/place/visit-gallery-02.jpg", alt: "The counter and the pastry case" },
+  { src: "/images/place/visit-gallery-03.jpg", alt: "The window seat, late afternoon" },
 ];
 
 export default function VisitPage() {
   return (
     <>
       <Hero
-        desktopSrc="/images/visit-hero.jpg"
+        desktopSrc="/images/hero/visit-hero.jpg"
         desktopWidth={2400}
         desktopHeight={1350}
-        mobileSrc="/images/visit-hero-mobile.jpg"
+        mobileSrc="/images/hero/visit-hero-mobile.jpg"
         mobileWidth={1200}
         mobileHeight={1600}
         alt="Tables at Almanac Coffee, cups and conversation in the afternoon"
-        height="band"
       >
         <Container>
-          <p className="eyebrow text-on-dark-muted">{shop.neighborhood}</p>
-          <h1 className="mt-3 max-w-2xl text-4xl text-paper">
+          <p className="eyebrow text-muted">{shop.neighborhood}</p>
+          <h1 className="mt-3 max-w-2xl text-4xl text-primary">
             Open early. Worth the drive.
           </h1>
         </Container>
@@ -57,7 +58,7 @@ export default function VisitPage() {
       {/* ---------------------------------------------------------------- */}
       {/* Hours and address                                                 */}
       {/* ---------------------------------------------------------------- */}
-      <section className="py-section">
+      <Section tone="light">
         <Container>
           <div className="grid gap-x-16 gap-y-14 lg:grid-cols-2">
             <Reveal>
@@ -67,9 +68,9 @@ export default function VisitPage() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.08}>
+            <Reveal delay={LEAD_AFTER_HEADING}>
               <h2 className="eyebrow">Where</h2>
-              <address className="mt-6 font-display text-2xl leading-snug not-italic text-espresso">
+              <address className="mt-6 font-display text-2xl leading-snug not-italic text-primary">
                 {address.street}
                 <br />
                 {address.city}, {address.state} {address.zip}
@@ -81,21 +82,12 @@ export default function VisitPage() {
                   href={directionsHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex min-h-[3rem] items-center gap-2 rounded-sm bg-espresso px-5 text-sm font-600 text-paper transition-[background-color,transform] duration-[var(--ac-dur-fast)] ease-out hover:-translate-y-0.5 hover:bg-mahogany active:translate-y-0"
+                  className="btn btn-primary"
                 >
-                  Get directions
-                  <span
-                    aria-hidden
-                    className="transition-transform duration-[var(--ac-dur-base)] ease-[var(--ac-ease-spring)] group-hover:translate-x-1"
-                  >
-                    →
-                  </span>
+                  <span className="btn-label">Get directions</span>
                 </a>
-                <a
-                  href={`tel:${phone.tel}`}
-                  className="inline-flex min-h-[3rem] items-center gap-2 rounded-sm border border-hairline-strong bg-surface px-5 text-sm font-600 text-espresso transition-[border-color,color,transform] duration-[var(--ac-dur-fast)] ease-out hover:-translate-y-0.5 hover:border-ember hover:text-ember active:translate-y-0"
-                >
-                  Call {phone.display}
+                <a href={`tel:${phone.tel}`} className="btn btn-plate">
+                  <span className="btn-label">Call {phone.display}</span>
                 </a>
               </div>
 
@@ -103,14 +95,14 @@ export default function VisitPage() {
                 Or write to{" "}
                 <a
                   href={`mailto:${shop.email}`}
-                  className="text-ember underline decoration-ember/30 underline-offset-4 transition-colors hover:decoration-ember"
+                  className="text-accent underline decoration-accent/30 underline-offset-4 transition-colors hover:decoration-accent"
                 >
                   {shop.email}
                 </a>
                 .
               </p>
 
-              <Reveal delay={0.12}>
+              <Reveal delay={LEAD_AFTER_HEADING}>
                 <figure className="mt-10">
                   {/* Ratio box rather than a fixed pixel width, so the embed
                       scales instead of pushing the page sideways on a phone. */}
@@ -128,15 +120,9 @@ export default function VisitPage() {
                       href={directionsHref}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group inline-flex items-center gap-1.5 font-600 text-ember transition-colors hover:text-amber"
+                      className="font-semibold"
                     >
-                      Open in Google Maps
-                      <span
-                        aria-hidden
-                        className="transition-transform duration-[var(--ac-dur-base)] ease-[var(--ac-ease-spring)] group-hover:translate-x-1"
-                      >
-                        →
-                      </span>
+                      <span className="link-draw">Open in Google Maps</span>
                     </a>
                   </figcaption>
                 </figure>
@@ -144,12 +130,12 @@ export default function VisitPage() {
             </Reveal>
           </div>
         </Container>
-      </section>
+      </Section>
 
       {/* ---------------------------------------------------------------- */}
       {/* Getting here                                                      */}
       {/* ---------------------------------------------------------------- */}
-      <section className="bg-sunken py-section">
+      <Section tone="dark">
         <Container>
           <SectionHeading
             eyebrow="Getting here"
@@ -158,20 +144,20 @@ export default function VisitPage() {
           />
           <div className="grid gap-x-8 gap-y-10 md:grid-cols-3">
             {shop.gettingHere.map((item, i) => (
-              <Reveal key={item.title} delay={i * 0.08}>
+              <Reveal key={item.title} delay={stagger(i)}>
                 <div className="border-t border-hairline-strong pt-6">
-                  <h3 className="text-xl text-espresso">{item.title}</h3>
+                  <h3 className="text-xl text-primary">{item.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted">{item.body}</p>
                 </div>
               </Reveal>
             ))}
           </div>
 
-          <Reveal delay={0.1}>
+          <Reveal delay={LEAD_AFTER_HEADING}>
             <figure className="mt-14 overflow-hidden rounded-md">
-              <div className="relative aspect-3/2 bg-linen sm:aspect-[3/1]">
+              <div className="relative aspect-3/2 bg-sunken sm:aspect-[3/1]">
                 <Image
-                  src="/images/neighborhood.jpg"
+                  src="/images/place/neighborhood.jpg"
                   alt="Brooks Street, looking north toward the tracks"
                   fill
                   quality={75}
@@ -182,12 +168,12 @@ export default function VisitPage() {
             </figure>
           </Reveal>
         </Container>
-      </section>
+      </Section>
 
       {/* ---------------------------------------------------------------- */}
       {/* Interior gallery                                                  */}
       {/* ---------------------------------------------------------------- */}
-      <section className="py-section">
+      <Section tone="light">
         <Container>
           <SectionHeading
             eyebrow="Inside"
@@ -195,14 +181,14 @@ export default function VisitPage() {
             lead="Twenty seats, a long communal table, and the roaster running behind the glass on a Tuesday."
             className="mb-12"
           />
-          <Gallery items={interiorGallery} columns={3} />
+          <Gallery items={interiorGallery} layout="row" />
         </Container>
-      </section>
+      </Section>
 
       {/* ---------------------------------------------------------------- */}
       {/* Contact                                                           */}
       {/* ---------------------------------------------------------------- */}
-      <section id="contact" className="scroll-mt-header bg-sunken py-section">
+      <Section tone="sunken" id="contact" >
         <Container width="narrow">
           <SectionHeading
             eyebrow="Say hello"
@@ -214,23 +200,23 @@ export default function VisitPage() {
             <ContactForm />
           </Reveal>
         </Container>
-      </section>
+      </Section>
 
       {/* ---------------------------------------------------------------- */}
       {/* Seasonal dispatch                                                 */}
       {/* ---------------------------------------------------------------- */}
-      <section className="bg-espresso py-section">
+      <Section tone="dark">
         <Container width="narrow">
           <Reveal>
             <DispatchForm />
           </Reveal>
         </Container>
-      </section>
+      </Section>
 
       {/* ---------------------------------------------------------------- */}
       {/* The people                                                        */}
       {/* ---------------------------------------------------------------- */}
-      <section className="py-section">
+      <Section tone="light">
         <Container>
           <SectionHeading
             eyebrow="The people"
@@ -239,7 +225,7 @@ export default function VisitPage() {
           />
           <TeamGrid />
         </Container>
-      </section>
+      </Section>
     </>
   );
 }

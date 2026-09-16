@@ -88,7 +88,7 @@ export default function HoursTable() {
             />
           )}
         </span>
-        <p className="font-body text-sm font-700 text-espresso">{label}</p>
+        <p className="font-body text-sm font-bold text-primary">{label}</p>
       </div>
 
       <table className="mt-6 w-full border-collapse text-sm">
@@ -104,14 +104,14 @@ export default function HoursTable() {
               >
                 <th
                   scope="row"
-                  className={`py-3 text-left font-body font-600 ${
-                    isToday ? "text-espresso" : "text-muted"
+                  className={`py-3 text-left font-body font-semibold ${
+                    isToday ? "text-primary" : "text-muted"
                   }`}
                 >
                   <span className="flex items-center gap-2">
                     {day.day}
                     {isToday && (
-                      <span className="rounded-xs bg-accent-quiet px-1.5 py-0.5 text-2xs font-600 tracking-wide text-ember uppercase">
+                      <span className="rounded-xs bg-accent-quiet px-1.5 py-0.5 text-2xs font-semibold tracking-wide text-accent uppercase">
                         Today
                       </span>
                     )}
@@ -119,7 +119,7 @@ export default function HoursTable() {
                 </th>
                 <td
                   className={`py-3 text-right tabular-nums ${
-                    isToday ? "font-600 text-espresso" : "text-muted"
+                    isToday ? "font-semibold text-primary" : "text-muted"
                   }`}
                 >
                   {day.open && day.close

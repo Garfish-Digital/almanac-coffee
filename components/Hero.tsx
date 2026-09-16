@@ -12,20 +12,18 @@ type Props = {
   mobileHeight: number;
   alt: string;
   children: ReactNode;
-  /** `full` fills the viewport (Home); `band` is a slimmer page header */
-  height?: "full" | "band";
 };
 
 /**
- * Art-directed hero.
+ * The hero. One component, one height, on every page.
  *
- * `getImageProps` lets a real <picture> element choose between the portrait
- * and landscape crops, so a phone downloads the portrait master and nothing
- * else — rather than being handed a wide image and cropping it with CSS.
+ * Height is a flat 60svh (floored and capped so it stays sane on a watch or an
+ * ultrawide) — the three pages previously ran 88svh, 46svh and 46svh, which is
+ * why they never felt like the same site.
  *
- * Per the next/image docs, an art-directed <picture> must not use `preload` or
- * `loading="eager"` (both would defeat the source selection and pull down two
- * files). `fetchPriority="high"` is the correct lever for an LCP image here.
+ * It carries two overlays of its own: a bottom-weighted scrim for the headline
+ * and a lighter top-weighted one for the masthead sitting over it. Both are
+ * photographic treatment, not chrome — there is no header bar on this site.
  */
 export default function Hero({
   desktopSrc,
@@ -36,7 +34,6 @@ export default function Hero({
   mobileHeight,
   alt,
   children,
-  height = "full",
 }: Props) {
   const common = { alt, sizes: "100vw", quality: 82 };
 
@@ -48,13 +45,11 @@ export default function Hero({
     props: { srcSet: mobile, ...rest },
   } = getImageProps({ ...common, src: mobileSrc, width: mobileWidth, height: mobileHeight });
 
-  const box =
-    height === "full"
-      ? "min-h-[clamp(34rem,88svh,54rem)]"
-      : "min-h-[clamp(20rem,46svh,30rem)]";
-
   return (
-    <section className={`relative isolate flex ${box} items-end overflow-hidden bg-espresso`}>
+    <section
+      data-tone="dark"
+      className="relative isolate flex min-h-[clamp(24rem,60svh,46rem)] items-end overflow-hidden bg-page"
+    >
       <picture>
         <source media="(min-width: 640px)" srcSet={desktop} />
         <source srcSet={mobile} />
@@ -67,12 +62,21 @@ export default function Hero({
         />
       </picture>
 
-      {/* Scrim, so the headline is legible over any part of the photograph.
-          Both overlays sit behind the content rather than on top of it. */}
+      {/* Bottom-weighted, for the headline */}
       <div aria-hidden className="photo-scrim absolute inset-0 -z-10" />
+      {/* Top-weighted, for the masthead that sits over this image */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 -z-10 h-[46%] bg-gradient-to-b from-ink/55 via-ink/20 to-transparent"
+      />
       <div aria-hidden className="grain absolute inset-0 -z-10" />
 
-      <div className="relative w-full pb-[clamp(3rem,7vw,6rem)] pt-header">{children}</div>
+      {/* Reserves the masthead's footprint. The mark is absolutely
+          positioned over this image, so without this the headline runs
+          straight under it on a laptop-height viewport. */}
+      <div className="relative w-full pt-[clamp(9.5rem,23vw,17rem)] pb-[clamp(2.5rem,6vw,5rem)]">
+        {children}
+      </div>
     </section>
   );
 }

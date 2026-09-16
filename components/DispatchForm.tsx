@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import shop from "@/content/shop";
+import { DUR, EASE_OUT } from "@/lib/motion";
 
 export default function DispatchForm() {
   const [email, setEmail] = useState("");
@@ -27,9 +28,9 @@ export default function DispatchForm() {
   };
 
   return (
-    <div className="rounded-md border border-hairline-dark bg-white/5 p-8 sm:p-10">
-      <h2 className="text-2xl text-paper">{shop.dispatch.title}</h2>
-      <p className="mt-3 max-w-measure text-sm leading-relaxed text-on-dark-muted">
+    <div className="rounded-md border border-hairline bg-surface p-8 sm:p-10">
+      <h2 className="text-2xl text-primary">{shop.dispatch.title}</h2>
+      <p className="mt-3 max-w-measure text-sm leading-relaxed text-muted">
         {shop.dispatch.body}
       </p>
 
@@ -40,13 +41,13 @@ export default function DispatchForm() {
             role="status"
             initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0 : 0.35, ease: [0.22, 0.61, 0.36, 1] }}
-            className="mt-7 flex items-start gap-3 text-sm text-paper"
+            transition={{ duration: reduceMotion ? 0 : DUR.flood, ease: EASE_OUT }}
+            className="mt-7 flex items-start gap-3 text-sm text-primary"
           >
-            <span aria-hidden className="mt-0.5 text-ember">✓</span>
+            <span aria-hidden className="mt-0.5 text-accent">✓</span>
             <span>
               You’re on the list — the next dispatch goes out when the shelf changes.
-              <span className="mt-1 block text-on-dark-muted">
+              <span className="mt-1 block text-muted">
                 Demonstration only: nothing was stored or sent.
               </span>
             </span>
@@ -59,7 +60,7 @@ export default function DispatchForm() {
             exit={{ opacity: 0 }}
             className="mt-7"
           >
-            <label htmlFor="dispatch-email" className="mb-2 block text-sm font-600 text-paper">
+            <label htmlFor="dispatch-email" className="mb-2 block text-sm font-semibold text-primary">
               Email address
             </label>
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -76,14 +77,11 @@ export default function DispatchForm() {
                 }}
                 aria-invalid={Boolean(error)}
                 aria-describedby={error ? "dispatch-error" : undefined}
-                className={`min-h-[3rem] flex-1 rounded-sm border bg-white/8 px-3.5 text-base text-paper transition-colors duration-[var(--ac-dur-fast)] placeholder:text-white/40
-                  ${error ? "border-ember" : "border-hairline-dark hover:border-white/35 focus:border-ember"}`}
+                className={`min-h-[3rem] flex-1 rounded-sm border bg-page/40 px-3.5 text-base text-primary transition-colors duration-[var(--ac-dur-fast)] placeholder:text-muted
+                  ${error ? "border-accent" : "border-hairline hover:border-hairline-strong focus:border-accent"}`}
               />
-              <button
-                type="submit"
-                className="inline-flex min-h-[3rem] items-center justify-center gap-2 rounded-sm bg-paper px-6 text-sm font-600 text-espresso transition-[background-color,transform] duration-[var(--ac-dur-fast)] ease-out hover:-translate-y-0.5 hover:bg-white active:translate-y-0"
-              >
-                Sign up
+              <button type="submit" className="btn btn-plate">
+                <span className="btn-label">Sign up</span>
               </button>
             </div>
             <AnimatePresence>
@@ -93,8 +91,8 @@ export default function DispatchForm() {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="overflow-hidden text-sm text-ember"
+                  transition={{ duration: DUR.base, ease: EASE_OUT }}
+                  className="overflow-hidden text-sm text-accent"
                 >
                   <span className="mt-2 block">{error}</span>
                 </motion.p>

@@ -2,6 +2,7 @@
 
 import { useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { DUR, EASE_OUT, springPop } from "@/lib/motion";
 
 type FieldName = "name" | "email" | "message";
 type Values = Record<FieldName, string>;
@@ -69,12 +70,12 @@ export default function ContactForm() {
   };
 
   const fieldClass = (field: FieldName) =>
-    `w-full rounded-sm border bg-surface px-3.5 py-3 text-base text-espresso transition-[border-color,box-shadow] duration-[var(--ac-dur-fast)]
+    `w-full rounded-sm border bg-surface px-3.5 py-3 text-base text-primary transition-[border-color,box-shadow] duration-[var(--ac-dur-fast)]
      placeholder:text-stone/70
      ${
        errors[field] && touched[field]
-         ? "border-ember"
-         : "border-hairline-strong hover:border-stone focus:border-ember"
+         ? "border-accent"
+         : "border-hairline-strong hover:border-stone focus:border-accent"
      }`;
 
   return (
@@ -85,17 +86,17 @@ export default function ContactForm() {
           initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: reduceMotion ? 0 : 0.4, ease: [0.22, 0.61, 0.36, 1] }}
+          transition={{ duration: reduceMotion ? 0 : DUR.flood, ease: EASE_OUT }}
           className="rounded-md border border-hairline bg-surface p-8"
           role="status"
         >
           <motion.svg
             viewBox="0 0 44 44"
             aria-hidden
-            className="h-11 w-11 text-ember"
+            className="h-11 w-11 text-accent"
             initial={reduceMotion ? false : { scale: 0.7, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.08, type: "spring", stiffness: 320, damping: 18 }}
+            transition={{ delay: DUR.instant, ...springPop }}
           >
             <circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.35" />
             <motion.path
@@ -107,10 +108,10 @@ export default function ContactForm() {
               strokeLinejoin="round"
               initial={reduceMotion ? false : { pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ delay: 0.18, duration: 0.45, ease: [0.22, 0.61, 0.36, 1] }}
+              transition={{ delay: DUR.fast, duration: DUR.reveal, ease: EASE_OUT }}
             />
           </motion.svg>
-          <h3 className="mt-5 text-2xl text-espresso">Thanks — that’s with us.</h3>
+          <h3 className="mt-5 text-2xl text-primary">Thanks — that’s with us.</h3>
           <p className="mt-3 max-w-measure text-sm leading-relaxed text-muted">
             We read everything and usually reply within a day or two. In the meantime, the
             coffee is still here.
@@ -126,7 +127,7 @@ export default function ContactForm() {
               setErrors({});
               setTouched({});
             }}
-            className="mt-6 inline-flex min-h-11 items-center text-sm font-600 text-ember transition-colors hover:text-amber"
+            className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
           >
             Write another
           </button>
@@ -144,7 +145,7 @@ export default function ContactForm() {
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
               {/* A real label, above the field, that doesn’t vanish on typing */}
-              <label htmlFor="name" className="mb-2 block text-sm font-600 text-espresso">
+              <label htmlFor="name" className="mb-2 block text-sm font-semibold text-primary">
                 Your name
               </label>
               <input
@@ -163,7 +164,7 @@ export default function ContactForm() {
             </div>
 
             <div>
-              <label htmlFor="email" className="mb-2 block text-sm font-600 text-espresso">
+              <label htmlFor="email" className="mb-2 block text-sm font-semibold text-primary">
                 Email address
               </label>
               {/* type="email" so phones bring up the right keyboard */}
@@ -185,7 +186,7 @@ export default function ContactForm() {
           </div>
 
           <div>
-            <label htmlFor="message" className="mb-2 block text-sm font-600 text-espresso">
+            <label htmlFor="message" className="mb-2 block text-sm font-semibold text-primary">
               What would you like to ask?
             </label>
             <textarea
@@ -203,11 +204,8 @@ export default function ContactForm() {
           </div>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
-            <button
-              type="submit"
-              className="inline-flex min-h-[3rem] items-center gap-2 rounded-sm bg-ember px-6 text-sm font-600 text-cream shadow-sm transition-[background-color,transform,box-shadow] duration-[var(--ac-dur-fast)] ease-out hover:-translate-y-0.5 hover:bg-amber hover:shadow-md active:translate-y-0"
-            >
-              Send it
+            <button type="submit" className="btn btn-primary">
+              <span className="btn-label">Send it</span>
             </button>
             <p className="text-xs text-muted">
               A demonstration form — it validates, but sends nothing.
@@ -228,8 +226,8 @@ function FieldError({ id, message }: { id: string; message?: string }) {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.2, ease: [0.22, 0.61, 0.36, 1] }}
-          className="overflow-hidden text-sm text-ember"
+          transition={{ duration: DUR.base, ease: EASE_OUT }}
+          className="overflow-hidden text-sm text-accent"
         >
           <span className="mt-2 block">{message}</span>
         </motion.p>

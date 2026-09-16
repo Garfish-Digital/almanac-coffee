@@ -6,7 +6,7 @@ type Props = {
   children: ReactNode;
   /** Stagger position within a group, in seconds */
   delay?: number;
-  /** Distance travelled, in px */
+  /** Distance traveled, in px */
   y?: number;
   className?: string;
 };

@@ -1,47 +1,38 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-type Variant = "primary" | "outline" | "onDark" | "quiet";
-
-const base =
-  "group inline-flex min-h-[3rem] items-center justify-center gap-2 rounded-sm px-6 text-sm font-600 " +
-  "transition-[background-color,border-color,color,transform,box-shadow] duration-[var(--ac-dur-fast)] ease-out " +
-  "hover:-translate-y-0.5 active:translate-y-0 active:duration-[var(--ac-dur-instant)]";
+type Variant = "primary" | "plate" | "onDark";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-ember text-cream shadow-sm hover:bg-amber hover:shadow-md",
-  outline: "border border-hairline-strong bg-surface text-espresso hover:border-ember hover:text-ember hover:shadow-sm",
-  onDark: "bg-paper/10 text-paper ring-1 ring-white/30 backdrop-blur-sm hover:bg-paper/20 hover:ring-white/50",
-  quiet: "px-0 text-espresso hover:text-ember hover:translate-y-0",
+  primary: "btn-primary",
+  plate: "btn-plate",
+  onDark: "btn-on-dark",
 };
 
 type Props = {
   href: string;
   children: ReactNode;
   variant?: Variant;
-  /** Trailing arrow that slides on hover. Off for buttons that aren’t a journey. */
-  arrow?: boolean;
   className?: string;
 };
 
+/**
+ * The button. Styling lives in the `.btn*` component layer in globals.css
+ * rather than in utility soup here, because the variants need pseudo-element
+ * flood layers and multi-stop box-shadows that don't express well as classes.
+ *
+ * No trailing arrow: the label carries the meaning, and a glyph repeated on
+ * every control reads as decoration rather than direction.
+ */
 export default function ButtonLink({
   href,
   children,
   variant = "primary",
-  arrow = true,
   className = "",
 }: Props) {
   return (
-    <Link href={href} className={`${base} ${variants[variant]} ${className}`}>
-      {children}
-      {arrow && (
-        <span
-          aria-hidden
-          className="transition-transform duration-[var(--ac-dur-base)] ease-[var(--ac-ease-spring)] group-hover:translate-x-1"
-        >
-          →
-        </span>
-      )}
+    <Link href={href} className={`btn ${variants[variant]} ${className}`}>
+      <span className="btn-label">{children}</span>
     </Link>
   );
 }

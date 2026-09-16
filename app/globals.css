@@ -25,7 +25,10 @@
   --color-surface: var(--ac-bg-surface);
   --color-sunken: var(--ac-bg-sunken);
   --color-inverse: var(--ac-bg-inverse);
+  --color-on-inverse: var(--ac-text-on-inverse);
+  --color-primary: var(--ac-text-primary);
   --color-muted: var(--ac-text-muted);
+  --color-on-accent: var(--ac-text-on-accent);
   --color-secondary: var(--ac-text-secondary);
   --color-on-dark: var(--ac-text-on-dark);
   --color-on-dark-muted: var(--ac-text-on-dark-muted);
@@ -34,23 +37,45 @@
   --color-hairline-dark: var(--ac-border-on-dark);
   --color-accent: var(--ac-accent);
   --color-accent-hover: var(--ac-accent-hover);
+  --color-accent-fill: var(--ac-accent-fill);
+  --color-accent-fill-hover: var(--ac-accent-fill-hover);
   --color-accent-quiet: var(--ac-accent-quiet);
 
   /* --- Type ------------------------------------------------------------- */
   --font-display: var(--ac-font-display);
   --font-body: var(--ac-font-body);
 
+  /*
+    Every step carries its own leading.
+    This matters: Tailwind pairs each `--text-*` with a `--text-*--line-height`,
+    and overriding only the size leaves the ORIGINAL leading in place — so
+    `text-3xl` was applying calc(2.25 / 1.875) = 1.2, a ratio derived from
+    Tailwind's 30px step rather than our 48px one. Worse, `text-*` utilities
+    outrank the base `h1..h4` rule, so the heading line-height token below was
+    never actually in effect. Leading now tightens as the type grows, on purpose.
+  */
   --text-2xs: var(--ac-text-2xs);
+  --text-2xs--line-height: var(--ac-leading-label);
   --text-xs: var(--ac-text-xs);
+  --text-xs--line-height: 1.5;
   --text-sm: var(--ac-text-sm);
+  --text-sm--line-height: 1.5;
   --text-base: var(--ac-text-base);
+  --text-base--line-height: 1.55;
   --text-md: var(--ac-text-md);
+  --text-md--line-height: var(--ac-leading-relaxed);
   --text-lg: var(--ac-text-lg);
+  --text-lg--line-height: 1.5;
   --text-xl: var(--ac-text-xl);
+  --text-xl--line-height: 1.25;
   --text-2xl: var(--ac-text-2xl);
+  --text-2xl--line-height: 1.16;
   --text-3xl: var(--ac-text-3xl);
+  --text-3xl--line-height: 1.1;
   --text-4xl: var(--ac-text-4xl);
+  --text-4xl--line-height: 1.07;
   --text-5xl: var(--ac-text-5xl);
+  --text-5xl--line-height: 1.03;
 
   --leading-tight: var(--ac-leading-tight);
   --leading-snug: var(--ac-leading-snug);
@@ -69,7 +94,7 @@
   --spacing-gutter: var(--ac-gutter);
   --spacing-section: var(--ac-section-y);
   --spacing-section-tight: var(--ac-section-y-tight);
-  --spacing-header: var(--ac-header-h);
+  --spacing-subnav: var(--ac-subnav-h);
 
   /* --- Radii ------------------------------------------------------------ */
   --radius-xs: var(--ac-radius-xs);
@@ -77,6 +102,7 @@
   --radius-md: var(--ac-radius-md);
   --radius-lg: var(--ac-radius-lg);
   --radius-xl: var(--ac-radius-xl);
+  --radius-pill: var(--ac-radius-pill);
 
   /* --- Elevation -------------------------------------------------------- */
   --shadow-xs: var(--ac-shadow-xs);
@@ -95,9 +121,17 @@
    ========================================================================== */
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* Not `smooth`: it makes the router's scroll-to-top animate on every
+       navigation. Smooth scrolling is applied per-interaction instead, where
+       it belongs — see the category rail's anchor handler. */
+    scroll-behavior: auto;
+    /* The native bar is hidden and replaced by a thumb that floats over the
+       content (components/ScrollThumb.tsx). A native scrollbar reserves a
+       gutter outside the content, and the body background paints it — so a
+       "transparent" track still shows as a pale strip beside dark sections. */
+    scrollbar-width: none;
     /* In-page anchors and the sticky sub-nav shouldn't land under the header */
-    scroll-padding-top: calc(var(--ac-header-h) + var(--ac-space-lg));
+    scroll-padding-top: calc(var(--ac-subnav-h) + var(--ac-space-lg));
     -webkit-text-size-adjust: 100%;
   }
 
@@ -119,9 +153,17 @@
   h4 {
     font-family: var(--ac-font-display);
     font-weight: 600;
-    line-height: var(--ac-leading-tight);
+    /* Fallback only — any heading carrying a `text-*` utility takes its
+       leading from the size step above, which is the intended path. */
+    line-height: var(--ac-leading-snug);
     letter-spacing: var(--ac-tracking-tight);
     text-wrap: balance;
+  }
+
+  /* Display face, but not a heading — without this it inherits the body
+     weight and renders noticeably lighter than every heading near it. */
+  blockquote {
+    font-weight: 500;
   }
 
   p {
@@ -146,6 +188,248 @@
     display: block;
     max-width: 100%;
   }
+
+  /* No painted scrollbar anywhere; ScrollThumb draws the only one. */
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  /* Touch devices already auto-hide their scrollbars, so a permanent thumb
+     there reads as a stray graphic rather than a control. */
+  @media (pointer: coarse) {
+    .scroll-thumb {
+      display: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   Buttons — one family, built on a letterpress idea
+   Nothing here moves the box. A button that jumps on hover reads as cheap; an
+   inked block that catches more light, or takes ink up from its base, reads as
+   a physical thing. Three variants, one set of physics:
+     .btn-primary  an inked ember block: raised, warms under the cursor,
+                   presses in when clicked
+     .btn-plate    a hairline plate on paper: ink floods up from the base and
+                   the label knocks out
+     .btn-on-dark  the same flood inverted, for sitting over photography
+   ========================================================================== */
+@layer components {
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding-inline: 1.75rem;
+    border-radius: var(--ac-radius-xs);
+    overflow: hidden;
+    font-family: var(--ac-font-body);
+    font-size: var(--ac-text-2xs);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      box-shadow var(--ac-dur-base) var(--ac-ease-out),
+      color var(--ac-dur-base) var(--ac-ease-out),
+      background-color var(--ac-dur-base) var(--ac-ease-out);
+  }
+
+  /* The flood layer. Scaled from the base rather than faded, so it reads as
+     ink soaking upward instead of a panel appearing. */
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform var(--ac-dur-slow) var(--ac-ease-out);
+  }
+
+  .btn-label {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* The variants all set box-shadow, and the components layer outranks the
+     base-layer :focus-visible ring — so it would silently vanish on buttons.
+     An outline sits outside that conflict entirely. */
+  .btn:focus-visible {
+    outline: 2px solid var(--ac-accent);
+    outline-offset: 3px;
+  }
+
+  /* --- Primary: an inked block ------------------------------------------ */
+  .btn-primary {
+    --btn-ink: var(--ac-accent-fill);
+    color: var(--ac-text-on-accent);
+    /* A whisper of a gradient, not a gloss. A strong light-to-dark ramp with a
+       bright top highlight is the old skeuomorphic web-button recipe and reads
+       dated; the material and the cast light should carry it instead. */
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--btn-ink) 95%, white) 0%,
+      var(--btn-ink) 55%,
+      color-mix(in oklab, var(--btn-ink) 94%, black) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.18),
+      inset 0 -1px 0 rgb(0 0 0 / 0.18),
+      0 1px 1px rgb(47 16 0 / 0.16),
+      0 8px 18px -8px rgb(47 16 0 / 0.38);
+  }
+  /* Primary takes ink too, so all three variants share the same gesture — a
+     glow on its own is nearly invisible in motion, which matters on camera. */
+  .btn-primary::before {
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--ac-accent-fill-lit) 96%, white) 0%,
+      var(--ac-accent-fill-lit) 100%
+    );
+  }
+  .btn-primary:hover::before {
+    transform: scaleY(1);
+  }
+  .btn-primary:hover {
+    /* The cast shadow warms to the ink's own color — a gray shadow under a
+       colored object is the giveaway of a cheap button. */
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.28),
+      inset 0 -1px 0 rgb(0 0 0 / 0.22),
+      0 2px 4px rgb(47 16 0 / 0.18),
+      0 16px 32px -10px rgb(199 80 0 / 0.55);
+  }
+  .btn-primary:active {
+    box-shadow:
+      inset 0 2px 5px rgb(0 0 0 / 0.34),
+      inset 0 -1px 0 rgb(255 255 255 / 0.1),
+      0 1px 1px rgb(47 16 0 / 0.22);
+  }
+
+  /* --- Plate: hairline on paper, floods with ink ------------------------ */
+  .btn-plate {
+    background-color: var(--ac-bg-surface);
+    color: var(--ac-text-primary);
+    box-shadow:
+      inset 0 0 0 1px var(--ac-border-strong),
+      0 1px 2px rgb(47 16 0 / 0.06);
+  }
+  .btn-plate::before {
+    background-color: var(--ac-bg-inverse);
+  }
+  .btn-plate:hover {
+    color: var(--ac-text-on-inverse);
+    box-shadow:
+      inset 0 0 0 1px var(--ac-bg-inverse),
+      0 8px 20px -8px rgb(47 16 0 / 0.3);
+  }
+  .btn-plate:hover::before {
+    transform: scaleY(1);
+  }
+  .btn-plate:active {
+    box-shadow:
+      inset 0 0 0 1px var(--ac-bg-inverse),
+      inset 0 2px 5px rgb(0 0 0 / 0.28);
+  }
+
+  /* --- On dark: the same flood, inverted, for use over photography ------ */
+  .btn-on-dark {
+    background-color: var(--ac-mahogany);
+    color: var(--ac-paper);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.22);
+  }
+  .btn-on-dark::before {
+    background-color: var(--ac-paper);
+  }
+  .btn-on-dark:hover {
+    color: var(--ac-espresso);
+    box-shadow:
+      inset 0 0 0 1px var(--ac-paper),
+      0 10px 26px -10px rgb(0 0 0 / 0.55);
+  }
+  .btn-on-dark:hover::before {
+    transform: scaleY(1);
+  }
+  .btn-on-dark:active {
+    box-shadow:
+      inset 0 0 0 1px var(--ac-paper),
+      inset 0 2px 5px rgb(0 0 0 / 0.2);
+  }
+
+  /* --- The mark ----------------------------------------------------------
+     The seal is a flat black vector, so it can't hold a gradient on its own.
+     Using it as a MASK instead paints any fill through its artwork — here a
+     warm metal ramp drawn straight from the palette, which reads as foil
+     stamped onto the photograph rather than a logo placed on top of it. */
+  .logo-mark {
+    display: block;
+    width: clamp(7rem, min(16vw, 21svh), 14.5rem);
+    aspect-ratio: 513 / 495;
+    /* Ends at ember, not mahogany: over a dark photograph a mahogany tail
+       sinks the bottom of the seal — "COFFEE CO." and the lower arc vanish. */
+    background-image: linear-gradient(
+      155deg,
+      var(--ac-cream) 0%,
+      var(--ac-sand) 20%,
+      var(--ac-amber) 52%,
+      var(--ac-ember) 100%
+    );
+    -webkit-mask-image: url("/images/brand/logo.svg");
+    mask-image: url("/images/brand/logo.svg");
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    transition: filter var(--ac-dur-base) var(--ac-ease-out);
+  }
+  a:hover > .logo-mark {
+    filter: brightness(1.08) saturate(1.06);
+  }
+
+  /* --- Card surface ------------------------------------------------------
+     Same principle as the buttons: the box does not move. Light blooms
+     underneath and the edge firms up. The asymmetric timing — fast in, slower
+     out — is what stops a hover feeling sticky. */
+  .card-surface {
+    transition:
+      box-shadow var(--ac-dur-base) var(--ac-ease-out),
+      border-color var(--ac-dur-base) var(--ac-ease-out);
+  }
+  .card-surface:hover {
+    transition-duration: var(--ac-dur-fast);
+    border-color: var(--ac-border-strong);
+    box-shadow: var(--ac-shadow-lg);
+  }
+
+  /* --- Text link: a rule that draws in, replacing the old arrow --------- */
+  .link-draw {
+    position: relative;
+    display: inline-block;
+    color: var(--ac-accent);
+    transition: color var(--ac-dur-fast) var(--ac-ease-out);
+  }
+  .link-draw::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.15em;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--ac-dur-base) var(--ac-ease-out);
+  }
+  .link-draw:hover::after,
+  .group:hover .link-draw::after {
+    transform: scaleX(1);
+  }
 }
 
 /* ==========================================================================
@@ -156,7 +440,10 @@
 @utility eyebrow {
   font-family: var(--ac-font-body);
   font-size: var(--ac-text-2xs);
-  font-weight: 600;
+  /* Sets font-size directly rather than via the `text-2xs` utility, so it needs
+     its own leading — body leading on letterspaced caps is far too loose. */
+  line-height: var(--ac-leading-label);
+  font-weight: 700;
   letter-spacing: var(--ac-tracking-widest);
   text-transform: uppercase;
   color: var(--ac-text-muted);
@@ -234,8 +521,8 @@
     opacity: 1;
     transform: none;
     transition:
-      opacity 620ms var(--ac-ease-out) var(--reveal-delay, 0ms),
-      transform 620ms var(--ac-ease-out) var(--reveal-delay, 0ms);
+      opacity var(--ac-dur-reveal) var(--ac-ease-out) var(--reveal-delay, 0ms),
+      transform var(--ac-dur-reveal) var(--ac-ease-out) var(--reveal-delay, 0ms);
   }
 }
 
@@ -249,6 +536,19 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Route change. Deliberately small: a page that slides a long way on every
+   navigation reads as a slideshow rather than a site. */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -268,7 +568,15 @@
   }
 }
 
+.page-enter {
+  animation: page-enter var(--ac-dur-slow) var(--ac-ease-out) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .page-enter {
+    animation: none;
+  }
+
   html {
     scroll-behavior: auto;
   }

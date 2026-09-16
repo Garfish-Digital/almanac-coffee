@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import { springIndicator } from "@/lib/motion";
 
 type Section = { id: string; title: string };
 
@@ -24,7 +25,7 @@ export default function CategoryNav({ sections }: { sections: Section[] }) {
 
     const headerH =
       parseFloat(
-        getComputedStyle(document.documentElement).getPropertyValue("--ac-header-h")
+        getComputedStyle(document.documentElement).getPropertyValue("--ac-subnav-h")
       ) * 16 || 72;
 
     /* The current category is the last one whose top has passed a line just
@@ -58,14 +59,33 @@ export default function CategoryNav({ sections }: { sections: Section[] }) {
     };
   }, [sections]);
 
-  /* Keep the active pill in view when the rail scrolls horizontally on phones */
+  /* Keep the active pill in view when the rail scrolls horizontally on phones.
+     This deliberately scrolls the rail's own axis rather than calling
+     scrollIntoView: even with `block: "nearest"`, scrollIntoView will scroll
+     ANY scrollable ancestor — including the document — to reveal the element.
+     On navigating to this page while scrolled, that dragged the window back
+     down and fought the router's scroll-to-top, landing you mid-page. */
   useEffect(() => {
-    const el = listRef.current?.querySelector<HTMLElement>(`[data-id="${active}"]`);
-    el?.scrollIntoView({ block: "nearest", inline: "center", behavior: reduceMotion ? "auto" : "smooth" });
+    const rail = listRef.current;
+    const el = rail?.querySelector<HTMLElement>(`[data-id="${active}"]`);
+    if (!rail || !el) return;
+    const left = el.offsetLeft - rail.clientWidth / 2 + el.clientWidth / 2;
+    rail.scrollTo({ left, behavior: reduceMotion ? "auto" : "smooth" });
   }, [active, reduceMotion]);
 
+  /* Anchor clicks scroll smoothly. `scroll-behavior: smooth` is deliberately
+     NOT set globally — it makes the router's scroll-to-top animate on every
+     navigation, which reads as sluggish and can be interrupted mid-glide. */
+  const onAnchorClick = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
+    const target = document.getElementById(id);
+    if (!target || reduceMotion) return;
+    event.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    history.replaceState(null, "", `#${id}`);
+  };
+
   return (
-    <div className="sticky top-header z-40 border-y border-hairline bg-page/88 backdrop-blur-md">
+    <div className="sticky top-0 z-40 border-y border-hairline bg-page">
       <nav aria-label="Menu categories" className="mx-auto max-w-page px-gutter">
         <ul
           ref={listRef}
@@ -77,18 +97,17 @@ export default function CategoryNav({ sections }: { sections: Section[] }) {
               <li key={s.id} className="snap-center">
                 <a
                   href={`#${s.id}`}
+                  onClick={(e) => onAnchorClick(e, s.id)}
                   data-id={s.id}
                   aria-current={isActive ? "true" : undefined}
-                  className={`relative flex h-11 items-center rounded-sm px-4 text-sm font-600 whitespace-nowrap transition-colors duration-[var(--ac-dur-fast)] ${
-                    isActive ? "text-cream" : "text-muted hover:text-espresso"
+                  className={`relative flex h-11 items-center rounded-sm px-4 text-sm font-semibold whitespace-nowrap transition-colors duration-[var(--ac-dur-fast)] ${
+                    isActive ? "text-on-accent" : "text-muted hover:text-primary"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="category-pill"
-                      transition={
-                        reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 36 }
-                      }
+                      transition={reduceMotion ? { duration: 0 } : springIndicator}
                       className="absolute inset-0 -z-10 rounded-sm bg-espresso"
                     />
                   )}

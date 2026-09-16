@@ -47,7 +47,7 @@ export const categories: MenuCategory[] = [
         name: "Espresso",
         price: 3.0,
         description: "Two ounces of the seasonal blend. Chocolate, dried cherry, a long finish.",
-        image: "menu-espresso.jpg",
+        image: "product/menu-espresso.jpg",
       },
       {
         id: "macchiato",
@@ -60,7 +60,7 @@ export const categories: MenuCategory[] = [
         name: "Cortado",
         price: 4.0,
         description: "Equal parts espresso and steamed milk, served in glass so you can see it.",
-        image: "menu-cortado.jpg",
+        image: "product/menu-cortado.jpg",
         featured: true,
       },
       {
@@ -68,21 +68,21 @@ export const categories: MenuCategory[] = [
         name: "Cappuccino",
         price: 4.5,
         description: "Six ounces, wet, with a proper cap of foam. Not a small latte.",
-        image: "menu-cappuccino.jpg",
+        image: "product/menu-cappuccino.jpg",
       },
       {
         id: "latte",
         name: "Latte",
         price: 5.0,
         description: "Twelve ounces of silk. Oat, whole, or nothing at all.",
-        image: "menu-latte.jpg",
+        image: "product/menu-latte.jpg",
       },
       {
         id: "mocha",
         name: "Mocha",
         price: 5.5,
         description: "Single-origin Peruvian cocoa, melted into the shot rather than stirred in after.",
-        image: "menu-mocha.jpg",
+        image: "product/menu-mocha.jpg",
       },
     ],
   },
@@ -96,7 +96,7 @@ export const categories: MenuCategory[] = [
         name: "Batch Brew",
         price: 3.5,
         description: "Whatever is on the shelf this week, brewed on the hour and held for thirty minutes. No longer.",
-        image: "menu-filter.jpg",
+        image: "product/menu-filter.jpg",
       },
       {
         id: "pour-over",
@@ -110,7 +110,7 @@ export const categories: MenuCategory[] = [
         name: "Cold Brew",
         price: 4.5,
         description: "Sixteen hours at cellar temperature. Bright rather than syrupy.",
-        image: "menu-coldbrew.jpg",
+        image: "product/menu-coldbrew.jpg",
       },
       {
         id: "cold-brew-tonic",
@@ -130,14 +130,14 @@ export const categories: MenuCategory[] = [
         name: "House Chai",
         price: 5.0,
         description: "Steeped in-house each morning — cardamom, clove, black pepper, far less sugar than you expect.",
-        image: "menu-chai.jpg",
+        image: "product/menu-chai.jpg",
       },
       {
         id: "matcha",
         name: "Matcha",
         price: 5.5,
         description: "Ceremonial grade from Uji, whisked to order. Grassy and sweet, never bitter.",
-        image: "menu-matcha.jpg",
+        image: "product/menu-matcha.jpg",
       },
       {
         id: "hot-chocolate",
@@ -163,7 +163,7 @@ export const categories: MenuCategory[] = [
         name: "Butter Croissant",
         price: 4.5,
         description: "Three days of folding, sixty-four layers, and a great deal of butter.",
-        image: "menu-croissant.jpg",
+        image: "product/menu-croissant.jpg",
         featured: true,
       },
       {
@@ -171,14 +171,14 @@ export const categories: MenuCategory[] = [
         name: "Thick-Cut Toast",
         price: 6.0,
         description: "Country loaf, cut at an inch. Cultured butter and house preserve, or olive oil and salt.",
-        image: "menu-toast.jpg",
+        image: "product/menu-toast.jpg",
       },
       {
         id: "cookie",
         name: "Rye Chocolate Cookie",
         price: 4.0,
         description: "Dark rye, brown butter, flaked salt. Somewhere between a cookie and a brownie.",
-        image: "menu-cookie.jpg",
+        image: "product/menu-cookie.jpg",
       },
       {
         id: "seasonal-tart",
@@ -200,7 +200,7 @@ export const beans: Bean[] = [
     notes: ["Dark chocolate", "Dried cherry", "Almond"],
     price: 19,
     weight: "12 oz",
-    image: "beans-bag-01.png",
+    image: "product/beans-bag-01.png",
   },
   {
     id: "kirinyaga",
@@ -211,7 +211,7 @@ export const beans: Bean[] = [
     notes: ["Blackcurrant", "Tomato leaf", "Cane sugar"],
     price: 24,
     weight: "10 oz",
-    image: "beans-bag-02.png",
+    image: "product/beans-bag-02.png",
   },
   {
     id: "espresso-blend",
@@ -222,7 +222,7 @@ export const beans: Bean[] = [
     notes: ["Cocoa nib", "Molasses", "Pipe tobacco"],
     price: 21,
     weight: "12 oz",
-    image: "beans-bag-04.png",
+    image: "product/beans-bag-04.png",
   },
   {
     id: "decaf",
@@ -233,7 +233,7 @@ export const beans: Bean[] = [
     notes: ["Milk chocolate", "Red apple", "Toffee"],
     price: 20,
     weight: "12 oz",
-    image: "beans-bag-03.png",
+    image: "product/beans-bag-03.png",
   },
 ];
 
@@ -247,7 +247,7 @@ export const grind = {
     "Every bag is roasted whole and stays that way until someone buys it. Tell us what you brew on and it leaves ground to match — or take it whole, which is what we would do.",
   options: [
     { name: "Whole bean", note: "What we’d pick. Grind it the morning you drink it." },
-    { name: "Espresso", note: "Fine. Dialled for a 9-bar machine." },
+    { name: "Espresso", note: "Fine. Dialed for a 9-bar machine." },
     { name: "Moka pot", note: "A step coarser than espresso." },
     { name: "Aeropress", note: "Medium-fine, for a two-minute steep." },
     { name: "Pour-over", note: "Medium. V60, Kalita, or a cone and some patience." },
@@ -268,7 +268,7 @@ export const seasonalCallout = {
   title: "Kirinyaga AA — sixty bags, and then it’s finished",
   body:
     "A single day lot out of Kirinyaga, fermented forty-eight hours and dried on raised beds. Loud, blackcurrant-forward, and the best coffee to come through this building all year. On the shelf now, and on pour-over at the bar until it runs out.",
-  image: "origin-notes.jpg",
+  image: "place/origin-notes.jpg",
 };
 
 /** The three seasonal cards on Home — the arc from origin to grind. */
@@ -278,8 +278,8 @@ export const seasonal = [
     eyebrow: "At origin",
     title: "Cherries on the drying beds",
     body: "This lot was raked by hand for eleven days before it ever saw a roaster. We buy the harvest, not the year.",
-    image: "seasonal-origin.jpg",
-    href: "/menu#beans",
+    image: "story/seasonal-origin.jpg",
+    href: "/coffee#beans",
     linkLabel: "See what’s landed",
   },
   {
@@ -287,17 +287,17 @@ export const seasonal = [
     eyebrow: "This week’s roast",
     title: "Twelve kilos at a time",
     body: "Small batches on a drum we rebuilt ourselves, cooled fast and bagged the same week. Nothing sits.",
-    image: "seasonal-roast.jpg",
-    href: "/menu#beans",
+    image: "story/seasonal-roast.jpg",
+    href: "/coffee#beans",
     linkLabel: "Buy the beans",
   },
   {
     id: "grind",
     eyebrow: "Ground to order",
-    title: "Dialled in for your brewer",
+    title: "Dialed in for your brewer",
     body: "Tell us what you brew on and we’ll grind it to match — or take it whole and do it properly at home.",
-    image: "seasonal-grind.jpg",
-    href: "/menu#beans",
+    image: "story/seasonal-grind.jpg",
+    href: "/coffee#beans",
     linkLabel: "Pick a grind",
   },
 ];

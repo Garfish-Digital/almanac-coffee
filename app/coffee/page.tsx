@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Container from "@/components/Container";
+import Section from "@/components/Section";
 import Hero from "@/components/Hero";
 import CategoryNav from "@/components/CategoryNav";
-import MenuSection from "@/components/MenuSection";
+import BarCategory from "@/components/BarCategory";
 import BeansShelf from "@/components/BeansShelf";
 import SectionHeading from "@/components/SectionHeading";
 import ButtonLink from "@/components/ButtonLink";
 import Reveal from "@/components/Reveal";
 import { categories, grind, seasonalCallout } from "@/content/menu";
+import { LEAD_AFTER_HEADING, stagger } from "@/lib/motion";
 
 export const metadata: Metadata = {
   title: "Coffee",
@@ -16,30 +18,39 @@ export const metadata: Metadata = {
     "What’s on the shelf this week — single lots and blends roasted in twelve-kilo batches in Sheridan, Wyoming, ground to order or left whole.",
 };
 
-/* Order matches the order of the sections below, so the scroll-spy agrees
-   with what you're actually reading. */
+/* Three parts, matching the header dropdown. The page used to advertise six
+   categories in this rail, four of which were drinks at the bar — which is not
+   what the business sells. */
 const sections = [
   { id: "beans", title: "Beans" },
   { id: "grind", title: "Grind" },
-  ...categories.map((c) => ({ id: c.id, title: c.title })),
+  { id: "bar", title: "At the bar" },
 ];
 
-export default function MenuPage() {
+/* One representative shot per bar category, in place of two per category
+   interspersed down the page. */
+const barShots = [
+  { src: "/images/product/menu-espresso.jpg", alt: "Espresso in a demitasse, crema intact" },
+  { src: "/images/product/menu-filter.jpg", alt: "Filter coffee in a ceramic mug" },
+  { src: "/images/product/menu-chai.jpg", alt: "House chai, spiced and steeped that morning" },
+  { src: "/images/product/menu-croissant.jpg", alt: "A butter croissant on a plate" },
+];
+
+export default function CoffeePage() {
   return (
     <>
       <Hero
-        desktopSrc="/images/menu-hero.jpg"
-        desktopWidth={2400}
+        desktopSrc="/images/hero/coffee-hero.jpg"
+        desktopWidth={1600}
         desktopHeight={1000}
-        mobileSrc="/images/menu-hero.jpg"
-        mobileWidth={2400}
+        mobileSrc="/images/hero/coffee-hero-mobile.jpg"
+        mobileWidth={750}
         mobileHeight={1000}
-        alt="Bags of freshly roasted coffee lined up on the packing bench"
-        height="band"
+        alt="Beans tumbling from the chute into the roaster’s cooling tray"
       >
         <Container>
-          <p className="eyebrow text-on-dark-muted">The shelf</p>
-          <h1 className="mt-3 max-w-2xl text-4xl text-paper">
+          <p className="eyebrow text-muted">The shelf</p>
+          <h1 className="mt-3 max-w-2xl text-4xl text-primary">
             What we’re roasting right now.
           </h1>
         </Container>
@@ -50,10 +61,7 @@ export default function MenuPage() {
       {/* ---------------------------------------------------------------- */}
       {/* Beans — the shop leads with what it actually sells                */}
       {/* ---------------------------------------------------------------- */}
-      <section
-        id="beans"
-        className="scroll-mt-[calc(var(--ac-header-h)+4.5rem)] py-section"
-      >
+      <Section tone="light" id="beans">
         <Container>
           <SectionHeading
             eyebrow="On the shelf"
@@ -63,15 +71,12 @@ export default function MenuPage() {
           />
           <BeansShelf />
         </Container>
-      </section>
+      </Section>
 
       {/* ---------------------------------------------------------------- */}
       {/* Grind                                                             */}
       {/* ---------------------------------------------------------------- */}
-      <section
-        id="grind"
-        className="scroll-mt-[calc(var(--ac-header-h)+4.5rem)] bg-sunken py-section"
-      >
+      <Section tone="dark" id="grind">
         <Container>
           <SectionHeading eyebrow="Before it leaves" title={grind.title} lead={grind.body} className="mb-12" />
 
@@ -79,9 +84,9 @@ export default function MenuPage() {
             <ul className="grid gap-px overflow-hidden rounded-md border border-hairline bg-hairline sm:grid-cols-2">
               {grind.options.map((option, i) => (
                 <li key={option.name} className="bg-surface">
-                  <Reveal delay={Math.min(i * 0.04, 0.2)}>
+                  <Reveal delay={stagger(i)}>
                     <div className="flex h-full flex-col p-5">
-                      <h3 className="font-body text-sm font-700 tracking-wide text-espresso">
+                      <h3 className="font-body text-sm font-bold tracking-wide text-primary">
                         {option.name}
                       </h3>
                       <p className="mt-1.5 text-sm leading-relaxed text-muted">{option.note}</p>
@@ -96,16 +101,16 @@ export default function MenuPage() {
               <ul className="mt-5">
                 {grind.sizes.map((size, i) => (
                   <li key={size.name}>
-                    <Reveal delay={0.08 + i * 0.06}>
+                    <Reveal delay={stagger(i, LEAD_AFTER_HEADING)}>
                       <div className="border-b border-hairline py-4">
-                        <p className="font-body text-base font-700 text-espresso">{size.name}</p>
+                        <p className="font-body text-base font-bold text-primary">{size.name}</p>
                         <p className="mt-1 text-sm leading-relaxed text-muted">{size.note}</p>
                       </div>
                     </Reveal>
                   </li>
                 ))}
               </ul>
-              <Reveal delay={0.2}>
+              <Reveal delay={LEAD_AFTER_HEADING}>
                 <p className="mt-6 text-sm leading-relaxed text-muted">
                   Not sure what to ask for? Tell us the machine and we’ll set it — that’s the
                   part most people get wrong at home.
@@ -114,31 +119,52 @@ export default function MenuPage() {
             </div>
           </div>
         </Container>
-      </section>
+      </Section>
 
       {/* ---------------------------------------------------------------- */}
-      {/* At the bar — secondary to the shop, but the reason to visit       */}
+      {/* At the bar — one section, not four. It's the reason to visit,     */}
+      {/* but it isn't the business.                                        */}
       {/* ---------------------------------------------------------------- */}
-      <section className="pt-section">
+      <Section tone="light" id="bar">
         <Container>
           <SectionHeading
             eyebrow="At the bar"
             title="Taste it before you buy a bag of it"
-            lead="Everything on the shelf can be pulled as a shot or brewed on the cone. That’s what the bar is for."
+            lead="Everything on the shelf can be pulled as a shot or brewed on the cone. There’s food too, and somewhere to sit while you decide."
+            className="mb-12"
           />
-        </Container>
-      </section>
 
-      <Container>
-        {categories.map((category, i) => (
-          <MenuSection key={category.id} category={category} flip={i % 2 === 1} />
-        ))}
-      </Container>
+          <ul className="mb-14 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+            {barShots.map((shot, i) => (
+              <li key={shot.src}>
+                <Reveal delay={stagger(i)}>
+                  <figure className="group relative aspect-square overflow-hidden rounded-sm bg-sunken">
+                    <Image
+                      src={shot.src}
+                      alt={shot.alt}
+                      fill
+                      quality={75}
+                      sizes="(min-width: 640px) 22vw, 45vw"
+                      className="object-cover transition-transform duration-[var(--ac-dur-image)] ease-[var(--ac-ease-out)] group-hover:scale-[1.05]"
+                    />
+                  </figure>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+
+          <div className="grid gap-x-14 gap-y-14 lg:grid-cols-2">
+            {categories.map((category) => (
+              <BarCategory key={category.id} category={category} />
+            ))}
+          </div>
+        </Container>
+      </Section>
 
       {/* ---------------------------------------------------------------- */}
       {/* Seasonal callout                                                  */}
       {/* ---------------------------------------------------------------- */}
-      <section className="py-section">
+      <Section tone="dark">
         <Container>
           <Reveal>
             <div className="grid items-stretch overflow-hidden rounded-md border border-hairline bg-surface lg:grid-cols-2">
@@ -154,7 +180,7 @@ export default function MenuPage() {
               </div>
               <div className="flex flex-col justify-center p-8 sm:p-12">
                 <p className="eyebrow">{seasonalCallout.eyebrow}</p>
-                <h2 className="mt-3 text-2xl text-espresso">{seasonalCallout.title}</h2>
+                <h2 className="mt-3 text-2xl text-primary">{seasonalCallout.title}</h2>
                 <p className="mt-4 max-w-measure text-md leading-relaxed text-muted">
                   {seasonalCallout.body}
                 </p>
@@ -165,7 +191,7 @@ export default function MenuPage() {
             </div>
           </Reveal>
         </Container>
-      </section>
+      </Section>
     </>
   );
 }

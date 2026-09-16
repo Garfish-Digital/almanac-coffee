@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Grenze, Plus_Jakarta_Sans } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ScrollThumb from "@/components/ScrollThumb";
 import shop from "@/content/shop";
 import "./globals.css";
 
@@ -29,8 +30,8 @@ export const metadata: Metadata = {
   description: shop.heroSubhead,
   applicationName: shop.name,
   icons: {
-    icon: [{ url: "/images/favicon.png", type: "image/png", sizes: "512x512" }],
-    apple: "/images/favicon.png",
+    icon: [{ url: "/images/brand/favicon.png", type: "image/png", sizes: "512x512" }],
+    apple: "/images/brand/favicon.png",
   },
   openGraph: {
     type: "website",
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/images/og-share.jpg",
+        url: "/images/brand/og-share.jpg",
         width: 1200,
         height: 630,
         alt: `The bar at ${shop.name}`,
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${shop.name} — ${shop.tagline}`,
     description: shop.heroSubhead,
-    images: ["/images/og-share.jpg"],
+    images: ["/images/brand/og-share.jpg"],
   },
 };
 
@@ -63,7 +64,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${grenze.variable} ${jakarta.variable}`}>
-      <body className="flex min-h-dvh flex-col bg-page text-espresso">
+      <body className="flex min-h-dvh flex-col bg-page text-primary">
         {/* Runs before the body paints, so scroll-reveal targets are hidden
             from the first frame rather than flashing in and back out. Anyone
             without JS never gets this class, and sees every section. */}
@@ -83,6 +84,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
+        <ScrollThumb />
       </body>
     </html>
   );
