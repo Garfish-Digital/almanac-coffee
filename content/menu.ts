@@ -274,9 +274,9 @@ export const grind = {
 /** The callout on the Menu page — the lot we most want to talk about. */
 export const seasonalCallout = {
   eyebrow: "Just landed",
-  title: "Kirinyaga AA — sixty bags, and then it’s finished",
+  title: "Sixty bags, and then it’s finished",
   body:
-    "A single day lot out of Kirinyaga, fermented forty-eight hours and dried on raised beds. Loud, blackcurrant-forward, and the best coffee to come through this building all year.",
+    "A single day lot out of Kirinyaga, fermented forty-eight hours and dried on raised beds. The best coffee to come through all year.",
   image: "place/sixty-bags.jpg",
 };
 

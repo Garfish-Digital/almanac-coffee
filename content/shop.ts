@@ -27,7 +27,7 @@ export type TeamMember = {
 const shop = {
   name: "Almanac Coffee",
   legalName: "Almanac Coffee Co.",
-  tagline: "Seasonal harvests, careful craft.",
+  tagline: "Seasonal harvests.",
 
   /** Used on the hero. One line, no more. */
   heroHeadline: "Coffee by the season",

@@ -6,6 +6,15 @@ export type GalleryItem = {
   src: string;
   /** Doubles as the hover caption, so write it like a caption */
   alt: string;
+  /**
+   * Shown only below `md`. The row layout is two columns on phones, so an odd
+   * number of frames leaves a hole in the last row; a mobile-only frame squares
+   * it off without changing the three-across desktop row.
+   *
+   * Note this still costs desktop visitors the download — `display: none` does
+   * not stop a fetch — so use it sparingly and keep the file small.
+   */
+  mobileOnly?: boolean;
 };
 
 type Props = {
@@ -69,7 +78,7 @@ export default function Gallery({ items, layout = "row", className = "" }: Props
     return (
       <ul className={`grid grid-cols-2 gap-3 md:grid-cols-3 ${className}`}>
         {items.map((item, i) => (
-          <li key={item.src}>
+          <li key={item.src} className={item.mobileOnly ? "md:hidden" : undefined}>
             <Frame item={item} ratio="" delay={stagger(i)} />
           </li>
         ))}

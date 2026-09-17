@@ -64,7 +64,7 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col gap-2 border-t border-hairline pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {YEAR} {shop.legalName}. Roasted in Sheridan, Wyoming.
+            © {YEAR} {shop.legalName} Roasted in Sheridan, Wyoming.
           </p>
         </div>
       </Container>

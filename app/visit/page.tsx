@@ -32,6 +32,11 @@ const interiorGallery = [
   { src: "/images/place/inside-1.jpg", alt: "The back room, the board, and the long tables" },
   { src: "/images/place/inside-2.jpg", alt: "A latte set down on the counter" },
   { src: "/images/place/inside-3.jpg", alt: "The bar from the door, under the pendants" },
+  {
+    src: "/images/place/inside-4.jpg",
+    alt: "The communal table, and the bar behind it",
+    mobileOnly: true,
+  },
 ];
 
 export default function VisitPage() {
