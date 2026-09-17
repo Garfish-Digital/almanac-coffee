@@ -116,9 +116,6 @@ export default function ContactForm() {
             We read everything and usually reply within a day or two. In the meantime, the
             coffee is still here.
           </p>
-          <p className="mt-4 rounded-sm bg-sunken px-3 py-2 text-xs text-muted">
-            This is a demonstration site — the form validates, but nothing was actually sent.
-          </p>
           <button
             type="button"
             onClick={() => {
@@ -207,9 +204,6 @@ export default function ContactForm() {
             <button type="submit" className="btn btn-primary">
               <span className="btn-label">Send it</span>
             </button>
-            <p className="text-xs text-muted">
-              A demonstration form — it validates, but sends nothing.
-            </p>
           </div>
         </motion.form>
       )}

@@ -1,12 +1,12 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-type Variant = "primary" | "plate" | "onDark";
+type Variant = "primary" | "plate" | "inverse";
 
 const variants: Record<Variant, string> = {
   primary: "btn-primary",
   plate: "btn-plate",
-  onDark: "btn-on-dark",
+  inverse: "btn-inverse",
 };
 
 type Props = {

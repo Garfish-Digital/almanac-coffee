@@ -213,7 +213,7 @@
                    presses in when clicked
      .btn-plate    a hairline plate on paper: ink floods up from the base and
                    the label knocks out
-     .btn-on-dark  the same flood inverted, for sitting over photography
+     .btn-inverse  a mahogany block that floods against its own ground
    ========================================================================== */
 @layer components {
   .btn {
@@ -336,27 +336,31 @@
       inset 0 2px 5px rgb(0 0 0 / 0.28);
   }
 
-  /* --- On dark: the same flood, inverted, for use over photography ------ */
-  .btn-on-dark {
+  /* --- Inverse: a mahogany block that floods AGAINST its own ground -----
+     The flood targets --ac-bg-inverse rather than a literal paper, so it
+     resolves to paper over a dark section and to espresso over a light one.
+     Hard-coding paper meant that on the light Visit section the button
+     flooded to the section's own colour and disappeared on hover. */
+  .btn-inverse {
     background-color: var(--ac-mahogany);
     color: var(--ac-paper);
     box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.22);
   }
-  .btn-on-dark::before {
-    background-color: var(--ac-paper);
+  .btn-inverse::before {
+    background-color: var(--ac-bg-inverse);
   }
-  .btn-on-dark:hover {
-    color: var(--ac-espresso);
+  .btn-inverse:hover {
+    color: var(--ac-text-on-inverse);
     box-shadow:
-      inset 0 0 0 1px var(--ac-paper),
+      inset 0 0 0 1px var(--ac-bg-inverse),
       0 10px 26px -10px rgb(0 0 0 / 0.55);
   }
-  .btn-on-dark:hover::before {
+  .btn-inverse:hover::before {
     transform: scaleY(1);
   }
-  .btn-on-dark:active {
+  .btn-inverse:active {
     box-shadow:
-      inset 0 0 0 1px var(--ac-paper),
+      inset 0 0 0 1px var(--ac-bg-inverse),
       inset 0 2px 5px rgb(0 0 0 / 0.2);
   }
 

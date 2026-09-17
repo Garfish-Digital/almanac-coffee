@@ -54,7 +54,7 @@ export default function CoffeePage() {
         <Container>
           <p className="eyebrow text-muted">The shelf</p>
           <h1 className="mt-3 max-w-2xl text-4xl text-primary">
-            What we’re roasting right now.
+            What we’re roasting right now
           </h1>
         </Container>
       </Hero>
@@ -173,7 +173,7 @@ export default function CoffeePage() {
               <div className="relative min-h-[16rem] bg-sunken">
                 <Image
                   src={`/images/${seasonalCallout.image}`}
-                  alt="Sorting the Kirinyaga lot by hand at the washing station"
+                  alt="Sacks of green coffee on the floor, labelled by origin"
                   fill
                   quality={75}
                   sizes="(min-width: 1024px) 50vw, 100vw"

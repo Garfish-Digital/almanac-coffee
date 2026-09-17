@@ -52,7 +52,7 @@
      deeper so interactive text clears 4.5:1 on paper — plain #c75000 measures
      4.25:1, which fails at body size. White on this reads 5.05:1. */
   --ac-accent: #bd4a00;
-  /* The accent plays two roles with opposite needs: as text it wants to be
+  /* The accent plays two roles with opposite needs: as text it wants to be.
      legible against the ground, as a fill it must stay dark enough for the
      label on top of it. One token can't do both, so the fill is separate. */
   --ac-accent-fill: #bd4a00;
@@ -108,7 +108,10 @@
   --ac-space-4xl: 8rem;
 
   /* Vertical rhythm between full-width page sections */
-  --ac-section-y: clamp(4rem, 7vw, 7.5rem);
+  /* The desktop end only: the mobile floor stays at 4rem because sections there
+     already run 1,100-3,400px of content, so extra padding buys scroll length
+     rather than breathing room. */
+  --ac-section-y: clamp(4rem, 9vw, 9.5rem);
   --ac-section-y-tight: clamp(2.75rem, 4.5vw, 4.5rem);
 
   /* ------------------------------------------------------------------------

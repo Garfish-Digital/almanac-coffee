@@ -49,7 +49,7 @@ export default function VisitPage() {
         <Container>
           <p className="eyebrow text-muted">{shop.neighborhood}</p>
           <h1 className="mt-3 max-w-2xl text-4xl text-primary">
-            Open early. Worth the drive.
+            Open early, worth the drive
           </h1>
         </Container>
       </Hero>
@@ -85,21 +85,10 @@ export default function VisitPage() {
                 >
                   <span className="btn-label">Get directions</span>
                 </a>
-                <a href={`tel:${phone.tel}`} className="btn btn-plate">
+                <a href={`tel:${phone.tel}`} className="btn btn-inverse">
                   <span className="btn-label">Call {phone.display}</span>
                 </a>
               </div>
-
-              <p className="mt-6 text-sm text-muted">
-                Or write to{" "}
-                <a
-                  href={`mailto:${shop.email}`}
-                  className="text-accent underline decoration-accent/30 underline-offset-4 transition-colors hover:decoration-accent"
-                >
-                  {shop.email}
-                </a>
-                .
-              </p>
 
               <Reveal delay={LEAD_AFTER_HEADING}>
                 <figure className="mt-10">
@@ -192,7 +181,7 @@ export default function VisitPage() {
           <SectionHeading
             eyebrow="Say hello"
             title="Send us a note"
-            lead="Questions about a lot, a wholesale or standing order, or something you left on the window seat."
+            lead="Questions about an order, or something you left on the window seat."
             className="mb-12"
           />
           <Reveal>

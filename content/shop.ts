@@ -30,13 +30,13 @@ const shop = {
   tagline: "Seasonal harvests, careful craft.",
 
   /** Used on the hero. One line, no more. */
-  heroHeadline: "Coffee by the season.",
+  heroHeadline: "Coffee by the season",
   heroSubhead:
     "A small roastery at the north end of Brooks Street.",
 
   story: [
-    "An almanac is a record kept year over year — when to plant, when to cut, what the weather did the last time it looked like this. We keep one for coffee. Every lot that comes through the roaster gets a page: the farm, the altitude, the week it landed, the profile that finally made it sing.",
-    "That book is why the shelf moves. Coffee is agricultural, harvests arrive when they arrive, and a bag that was extraordinary in March is only good by August. We would rather sell you something different than sell you something tired.",
+    "An almanac is a record kept year over year — when to plant, when to cut, what the weather did the last time it looked like this. Every lot that comes through the roaster gets a page: the farm, the altitude, and the week it landed.",
+    "Coffee is agricultural, harvests arrive when they arrive, and a bag that was extraordinary in March is only good by August.",
   ],
 
   /** Three short statements of craft, used beside the story portrait. */
@@ -66,7 +66,7 @@ const shop = {
   ] as DayHours[],
 
   hoursNote:
-    "We roast Tuesday and Thursday mornings. It gets loud for an hour, and the whole block smells like it.",
+    "We roast Tuesday and Thursday mornings.",
 
   address: {
     street: "118 N. Brooks Street",
@@ -81,7 +81,7 @@ const shop = {
   phone: { tel: "+13075550148", display: "(307) 555-0148" },
   email: "hello@almanaccoffee.com",
 
-  neighborhood: "Two blocks off Main, at the north end of Brooks Street.",
+  neighborhood: "At the north end of Brooks Street",
 
   gettingHere: [
     {

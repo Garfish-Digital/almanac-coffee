@@ -101,6 +101,13 @@ export const categories: MenuCategory[] = [
         featured: true,
       },
       {
+        id: "siphon",
+        name: "Siphon",
+        price: 7.0,
+        description:
+          "Vacuum-brewed at the bar. Ten minutes, a small spectacle, and the cleanest cup we make.",
+      },
+      {
         id: "cold-brew",
         name: "Cold Brew",
         price: 4.5,
@@ -111,6 +118,13 @@ export const categories: MenuCategory[] = [
         name: "Cold Brew Tonic",
         price: 5.5,
         description: "Over ice with tonic and a wide strip of orange peel. Summer only.",
+      },
+      {
+        id: "japanese-iced",
+        name: "Japanese Iced",
+        price: 5.0,
+        description:
+          "Brewed hot straight onto ice, so it keeps the aromatics a long cold steep flattens.",
       },
     ],
   },
@@ -227,8 +241,8 @@ export const beans: Bean[] = [
     notes: ["Tangerine", "Caramel", "Red apple"],
     price: 20,
     weight: "12 oz",
-    image: "product/bean-galeras.jpg",
-    imageAlt: "Green coffee in a bowl, ready for the roaster",
+    image: "product/bean-galeras-sorting.jpg",
+    imageAlt: "Sorting cherries by hand at the washing station",
   },
 ];
 
@@ -263,7 +277,7 @@ export const seasonalCallout = {
   title: "Kirinyaga AA — sixty bags, and then it’s finished",
   body:
     "A single day lot out of Kirinyaga, fermented forty-eight hours and dried on raised beds. Loud, blackcurrant-forward, and the best coffee to come through this building all year.",
-  image: "place/kirinyaga-lot.jpg",
+  image: "place/sixty-bags.jpg",
 };
 
 /** The three seasonal cards on Home — the arc from origin to grind. */

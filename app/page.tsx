@@ -12,12 +12,12 @@ import shop from "@/content/shop";
 import { LEAD_AFTER_HEADING, stagger } from "@/lib/motion";
 
 const galleryItems = [
-  { src: "/images/story/gallery-01.jpg", alt: "Steamed milk poured from a pitcher at the bar" },
-  { src: "/images/story/gallery-02.jpg", alt: "Roasted beans with a sampling scoop" },
-  { src: "/images/story/gallery-03.jpg", alt: "A grower raking coffee cherries across a drying bed" },
-  { src: "/images/story/gallery-04.jpg", alt: "A hand grinder loaded with beans" },
-  { src: "/images/story/gallery-05.jpg", alt: "Two hands cupped around freshly roasted beans" },
-  { src: "/images/story/gallery-06.jpg", alt: "A pour-over brewed with a gooseneck kettle" },
+  { src: "/images/story/macchiato.jpg", alt: "A macchiato, layered in the glass" },
+  { src: "/images/story/beans-scoop.jpg", alt: "Roasted beans with a sampling scoop" },
+  { src: "/images/story/drying-beds.jpg", alt: "A grower raking coffee cherries across a drying bed" },
+  { src: "/images/story/grinder-grounds.jpg", alt: "A grinder, whole beans and fresh grounds on the bench" },
+  { src: "/images/story/beans-in-hands.jpg", alt: "Two hands cupped around freshly roasted beans" },
+  { src: "/images/story/pour-over-kettle.jpg", alt: "A pour-over brewed with a gooseneck kettle" },
 ];
 
 /** Staggered entrance for the hero copy, in a single beat after the image. */
@@ -53,7 +53,7 @@ export default function HomePage() {
             </p>
             <div className="mt-9 flex flex-wrap gap-3" style={rise(0.45)}>
               <ButtonLink href="/coffee">Shop the coffee</ButtonLink>
-              <ButtonLink href="/visit" variant="onDark">
+              <ButtonLink href="/visit" variant="inverse">
                 Plan a visit
               </ButtonLink>
             </div>
@@ -83,7 +83,7 @@ export default function HomePage() {
               <p className="eyebrow">The Almanac</p>
               <Reveal>
                 <h2 className="mt-3 text-3xl text-primary">
-                  A book of what grew, when, and how it tasted.
+                  A book of what grew, when, and how it tasted
                 </h2>
               </Reveal>
             </div>
