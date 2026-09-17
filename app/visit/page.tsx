@@ -5,7 +5,6 @@ import Section from "@/components/Section";
 import Hero from "@/components/Hero";
 import HoursTable from "@/components/HoursTable";
 import ContactForm from "@/components/ContactForm";
-import DispatchForm from "@/components/DispatchForm";
 import TeamGrid from "@/components/TeamGrid";
 import Gallery from "@/components/Gallery";
 import SectionHeading from "@/components/SectionHeading";
@@ -30,9 +29,9 @@ const mapEmbedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(
 )}&z=16&output=embed`;
 
 const interiorGallery = [
-  { src: "/images/place/visit-gallery-01.jpg", alt: "The seating nook at the back" },
-  { src: "/images/place/visit-gallery-02.jpg", alt: "The counter and the pastry case" },
-  { src: "/images/place/visit-gallery-03.jpg", alt: "The window seat, late afternoon" },
+  { src: "/images/place/inside-1.jpg", alt: "The back room, the board, and the long tables" },
+  { src: "/images/place/inside-2.jpg", alt: "A latte set down on the counter" },
+  { src: "/images/place/inside-3.jpg", alt: "The bar from the door, under the pendants" },
 ];
 
 export default function VisitPage() {
@@ -157,8 +156,8 @@ export default function VisitPage() {
             <figure className="mt-14 overflow-hidden rounded-md">
               <div className="relative aspect-3/2 bg-sunken sm:aspect-[3/1]">
                 <Image
-                  src="/images/place/neighborhood.jpg"
-                  alt="Brooks Street, looking north toward the tracks"
+                  src="/images/hero/home-hero.jpg"
+                  alt="Two brass hand grinders beside a burlap sack of roasted beans"
                   fill
                   quality={75}
                   sizes="100vw"
@@ -178,7 +177,7 @@ export default function VisitPage() {
           <SectionHeading
             eyebrow="Inside"
             title="Somewhere to actually sit"
-            lead="Twenty seats, a long communal table, and the roaster running behind the glass on a Tuesday."
+            lead="Twenty seats, a long communal table, and the roaster running behind the glass."
             className="mb-12"
           />
           <Gallery items={interiorGallery} layout="row" />
@@ -188,7 +187,7 @@ export default function VisitPage() {
       {/* ---------------------------------------------------------------- */}
       {/* Contact                                                           */}
       {/* ---------------------------------------------------------------- */}
-      <Section tone="sunken" id="contact" >
+      <Section tone="dark" id="contact">
         <Container width="narrow">
           <SectionHeading
             eyebrow="Say hello"
@@ -198,17 +197,6 @@ export default function VisitPage() {
           />
           <Reveal>
             <ContactForm />
-          </Reveal>
-        </Container>
-      </Section>
-
-      {/* ---------------------------------------------------------------- */}
-      {/* Seasonal dispatch                                                 */}
-      {/* ---------------------------------------------------------------- */}
-      <Section tone="dark">
-        <Container width="narrow">
-          <Reveal>
-            <DispatchForm />
           </Reveal>
         </Container>
       </Section>

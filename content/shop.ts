@@ -100,30 +100,24 @@ const shop = {
 
   team: [
     {
-      name: "Mireille Okonkwo",
+      name: "Harlan McRae",
       role: "Founder & Roaster",
       bio: "Keeps the ledger, runs the drum, and will talk about altitude for longer than you want.",
-      image: "people/team-01.jpg",
+      image: "people/harlan-mcrae.jpg",
     },
     {
       name: "Sam Ferreira",
       role: "Green Buyer",
       bio: "Cups every offer that reaches us and turns most of them down. Sets the roast profile once a lot survives.",
-      image: "people/team-02.jpg",
+      image: "people/sam-ferreira.jpg",
     },
     {
       name: "Dara Whitlock",
       role: "Bar & Orders",
       bio: "Pulls the shots, grinds the bags, and packs every mail order that leaves the building.",
-      image: "people/team-03.jpg",
+      image: "people/dara-whitlock.jpg",
     },
   ] as TeamMember[],
-
-  /** The seasonal dispatch — a newsletter that validates and sends nothing. */
-  dispatch: {
-    title: "The Seasonal Dispatch",
-    body: "One short letter when the shelf changes — what landed, whose farm it came from, and how we're roasting it. Roughly six times a year. Never more.",
-  },
 
   social: [
     { label: "Instagram", handle: "@almanaccoffee", href: "https://instagram.com" },
@@ -132,7 +126,7 @@ const shop = {
 
   pullQuote: {
     text: "The shelf changes because the harvest does.",
-    attribution: "Mireille Okonkwo, founder",
+    attribution: "Harlan McRae, founder",
   },
 };
 

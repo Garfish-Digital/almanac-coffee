@@ -85,7 +85,12 @@ export default function CategoryNav({ sections }: { sections: Section[] }) {
   };
 
   return (
-    <div className="sticky top-0 z-40 border-y border-hairline bg-page">
+    <div
+      /* Same treatment as the footer: dark ground, paper type. The tone flag
+         makes bg-page resolve to espresso and the link colours invert. */
+      data-tone="dark"
+      className="sticky top-0 z-40 border-y border-hairline bg-page"
+    >
       <nav aria-label="Menu categories" className="mx-auto max-w-page px-gutter">
         <ul
           ref={listRef}
@@ -108,7 +113,7 @@ export default function CategoryNav({ sections }: { sections: Section[] }) {
                     <motion.span
                       layoutId="category-pill"
                       transition={reduceMotion ? { duration: 0 } : springIndicator}
-                      className="absolute inset-0 -z-10 rounded-sm bg-espresso"
+                      className="absolute inset-0 -z-10 rounded-sm bg-accent"
                     />
                   )}
                   <span className="relative">{s.title}</span>

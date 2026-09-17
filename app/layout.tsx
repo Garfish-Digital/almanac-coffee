@@ -65,14 +65,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${grenze.variable} ${jakarta.variable}`}>
       <body className="flex min-h-dvh flex-col bg-page text-primary">
-        {/* Runs before the body paints, so scroll-reveal targets are hidden
-            from the first frame rather than flashing in and back out. Anyone
-            without JS never gets this class, and sees every section. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `document.documentElement.classList.add("js")`,
-          }}
-        />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-sm focus:bg-espresso focus:px-4 focus:py-2 focus:text-sm focus:text-paper"

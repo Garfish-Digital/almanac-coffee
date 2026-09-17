@@ -29,11 +29,14 @@ const sections = [
 
 /* One representative shot per bar category, in place of two per category
    interspersed down the page. */
+/* One per category, in the order the sections appear below: Espresso, Filter,
+   Not Coffee, Food. The previous set was four espresso drinks, which looked
+   handsome but told you nothing about what else is on. */
 const barShots = [
-  { src: "/images/product/menu-espresso.jpg", alt: "Espresso in a demitasse, crema intact" },
-  { src: "/images/product/menu-filter.jpg", alt: "Filter coffee in a ceramic mug" },
-  { src: "/images/product/menu-chai.jpg", alt: "House chai, spiced and steeped that morning" },
-  { src: "/images/product/menu-croissant.jpg", alt: "A butter croissant on a plate" },
+  { src: "/images/product/bar-espresso.jpg", alt: "A shot pulling from the portafilter" },
+  { src: "/images/product/bar-pour-over.jpg", alt: "Three cones brewing under a gooseneck kettle" },
+  { src: "/images/product/bar-hot-chocolate.jpg", alt: "Drinking chocolate under cream and shaved chocolate" },
+  { src: "/images/product/bar-croissant.jpg", alt: "Butter croissants fresh off the board" },
 ];
 
 export default function CoffeePage() {
@@ -65,8 +68,8 @@ export default function CoffeePage() {
         <Container>
           <SectionHeading
             eyebrow="On the shelf"
-            title="Four bags, and they move with the harvest"
-            lead="Roasted in twelve-kilo batches and dated on the base. When a lot runs out we don’t reorder it — we find the next one."
+            title="Four bags from the harvest"
+            lead="Roasted in twelve-kilo batches and dated on the base. When a lot runs out we find the next one."
             className="mb-12"
           />
           <BeansShelf />
@@ -112,8 +115,7 @@ export default function CoffeePage() {
               </ul>
               <Reveal delay={LEAD_AFTER_HEADING}>
                 <p className="mt-6 text-sm leading-relaxed text-muted">
-                  Not sure what to ask for? Tell us the machine and we’ll set it — that’s the
-                  part most people get wrong at home.
+                  Not sure what to ask for? Tell us the machine and we’ll set it.
                 </p>
               </Reveal>
             </div>
@@ -129,8 +131,8 @@ export default function CoffeePage() {
         <Container>
           <SectionHeading
             eyebrow="At the bar"
-            title="Taste it before you buy a bag of it"
-            lead="Everything on the shelf can be pulled as a shot or brewed on the cone. There’s food too, and somewhere to sit while you decide."
+            title="Taste it before you buy a bag"
+            lead="Everything on the shelf can be pulled as a shot or brewed on the cone."
             className="mb-12"
           />
 
@@ -171,7 +173,7 @@ export default function CoffeePage() {
               <div className="relative min-h-[16rem] bg-sunken">
                 <Image
                   src={`/images/${seasonalCallout.image}`}
-                  alt="Green coffee in a burlap sack, being sorted by hand"
+                  alt="Sorting the Kirinyaga lot by hand at the washing station"
                   fill
                   quality={75}
                   sizes="(min-width: 1024px) 50vw, 100vw"

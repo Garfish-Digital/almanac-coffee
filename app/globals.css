@@ -506,18 +506,23 @@
 /* ==========================================================================
    Scroll reveal
    The hidden state is applied here rather than in the component's markup, and
-   only once `js` is on <html> (set before first paint in the root layout). So
-   the content is visible to anyone without JavaScript, visible if hydration
-   fails, and visible under reduced motion — and there is no server/client
-   markup difference that could strand an element at opacity 0.
+   only where scripting is available. So the content is visible to anyone
+   without JavaScript, visible under reduced motion, and there is no
+   server/client markup difference that could strand an element at opacity 0.
    ========================================================================== */
-@media (prefers-reduced-motion: no-preference) {
-  html.js [data-reveal] {
+/* `scripting: enabled` replaces the old `html.js` class that an inline script
+   used to set. That script mutated <html>'s className before React hydrated,
+   which produced a hydration attribute mismatch on every page load. The media
+   feature answers the same question — is JS available? — with no DOM mutation,
+   and fails safe: a browser that doesn't support it simply never hides the
+   content. */
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+  [data-reveal] {
     opacity: 0;
     transform: translateY(var(--reveal-y, 22px));
   }
 
-  html.js [data-reveal].is-revealed {
+  [data-reveal].is-revealed {
     opacity: 1;
     transform: none;
     transition:

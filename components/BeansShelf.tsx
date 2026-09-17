@@ -12,19 +12,16 @@ export default function BeansShelf() {
         <li key={bean.id}>
           <Reveal delay={stagger(i)} className="h-full">
             <article className="group flex h-full flex-col overflow-hidden rounded-md border border-hairline bg-surface card-surface">
-              {/* The bag sits on a warm ground rather than a cut-out white box */}
+              {/* Origin photography rather than a cut-out bag, so it fills the
+                  frame — no plinth or radial ground underneath it. */}
               <div className="relative aspect-4/3 overflow-hidden bg-sunken">
-                <div
-                  aria-hidden
-                  className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_18%,var(--ac-cream),var(--ac-sand))]"
-                />
                 <Image
                   src={`/images/${bean.image}`}
-                  alt={`${bean.name}, a ${bean.weight} retail bag`}
+                  alt={bean.imageAlt}
                   fill
                   quality={75}
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-contain p-6 transition-transform duration-[var(--ac-dur-image)] ease-[var(--ac-ease-out)] group-hover:scale-[1.05]"
+                  className="object-cover transition-transform duration-[var(--ac-dur-image)] ease-[var(--ac-ease-out)] group-hover:scale-[1.05]"
                 />
               </div>
 
